@@ -24,9 +24,12 @@ exports = module.exports = {
     let childArgs = []
     for (const key in options) {
       if (SUPPORTED_OPTIONS.hasOwnProperty(key)) {
-        childArgs.push(`${SUPPORTED_OPTIONS[key]} ${options[key]}`)
+        childArgs.push(
+          `${SUPPORTED_OPTIONS[key]} ${options[key]}`
+        )
       } else {
         switch (key) {
+        case 'bin': // unoconv path
         case 'file': // Target File
         case 'string': // Output as string
           break
