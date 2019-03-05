@@ -28,6 +28,11 @@ exports = module.exports = function (options = {}) {
       return reject(err)
     })
 
+    if (options.hasOwnProperty('stdin')) {
+      child.stdin.write(options.stdin)
+      child.stdin.end()
+    }
+
     child.stdout.on('data', function (data) {
       stdout.push(data)
     })
@@ -38,7 +43,9 @@ exports = module.exports = function (options = {}) {
 
     child.on('exit', function () {
       if (stderr.length) {
-        return reject(new Error(Buffer.concat(stderr).toString('utf8')))
+        return reject(new Error(
+          Buffer.concat(stderr).toString('utf8'))
+        )
       }
       if (options.string) {
         resolve(Buffer.concat(stdout).toString('utf8'))
